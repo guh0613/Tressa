@@ -5,22 +5,29 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle, Code, Eye, Globe, Lock, FileCode, Save, Settings } from 'lucide-react'
+import { AlertCircle, Code, Globe, Lock, FileCode, Save, Settings, MousePointerBan } from 'lucide-react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { MonacoEditor } from '@/components/MonacoEditor'
-import { CodePreview } from '@/components/CodePreview'
 import { API_URL } from '@/config'
 import { languageOptions } from '@/lib/languageOptions'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from "@/components/ui/dialog"
+import { TressEditor } from '@/components/TressEditor'
+
 
 export function CreateTress() {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-  const [language, setLanguage] = useState('javascript')
+  const [language, setLanguage] = useState('plaintext')
   const [isPublic, setIsPublic] = useState(true)
   const [error, setError] = useState('')
   const [activeTab, setActiveTab] = useState('edit')
+  const [vimMode, setVimMode] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -76,8 +83,20 @@ export function CreateTress() {
                     Customize your editor
                   </DialogDescription>
                 </DialogHeader>
-                <div className="flex items-center justify-between">
-                  <span>Theme</span>
+                <div className="flex items-center space-x-2">
+                  <MousePointerBan className="h-5 w-5"/>
+                  <label
+                      htmlFor="vim-mode"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Vim Mode
+                  </label>
+                  <Switch
+                      id="vim-mode"
+                      checked={vimMode}
+                      onCheckedChange={setVimMode}
+                  />
+
                 </div>
               </DialogContent>
             </Dialog>
@@ -85,7 +104,7 @@ export function CreateTress() {
         </div>
         {error && (
             <Alert variant="destructive" className="mb-6">
-              <AlertCircle className="h-4 w-4" />
+              <AlertCircle className="h-4 w-4"/>
               <AlertTitle>Error</AlertTitle>
               <AlertDescription>{error}</AlertDescription>
             </Alert>
@@ -134,29 +153,14 @@ export function CreateTress() {
               {isPublic ? 'Public' : 'Private'}
             </Label>
           </div>
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="edit" className="flex items-center gap-2">
-                <Code className="h-4 w-4" />
-                Edit
-              </TabsTrigger>
-              <TabsTrigger value="preview" className="flex items-center gap-2">
-                <Eye className="h-4 w-4" />
-                Preview
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="edit" className="border rounded-md p-4 mt-2">
-              <MonacoEditor
-                  language={language}
-                  value={content}
-                  onChange={setContent}
-                  height="400px"
-              />
-            </TabsContent>
-            <TabsContent value="preview" className="border rounded-md p-4 mt-2">
-              <CodePreview content={content} language={language} />
-            </TabsContent>
-          </Tabs>
+          <TressEditor
+              content={content}
+              language={language}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              setContent={setContent}
+              vimMode={vimMode}
+          />
           <Button type="submit" className="w-full flex items-center justify-center gap-2">
             <Save className="h-4 w-4" />
             Create Tress

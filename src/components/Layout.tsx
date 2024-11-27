@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { MoonIcon, SunIcon, HomeIcon, PlusCircleIcon, MenuIcon, UserIcon } from 'lucide-react'
 import { useTheme } from "@/components/theme-provider"
-import { API_URL } from '@/config'
+import { API_URL, VERSION_CODE, APP_VERSION } from '@/config'
 
 interface LayoutProps {
     children: ReactNode
@@ -124,7 +124,7 @@ export function Layout({ children }: LayoutProps) {
             </main>
             <footer className="border-t">
                 <div className="container mx-auto px-4 py-4 text-center text-muted-foreground">
-                    Tressa is now in very early stages of development.
+                    Version {APP_VERSION}({VERSION_CODE}) - Tressa is now in very early stages of development.
                 </div>
             </footer>
         </div>

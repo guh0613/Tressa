@@ -43,7 +43,7 @@ export function Home() {
                     {tress.title}
                 </CardTitle>
                 <CardDescription className="flex items-center">
-                    By User {tress.owner_username}
+                    By {tress.owner_username}
                     {!tress.is_public && <Lock className="w-4 h-4 ml-2" />}
                 </CardDescription>
             </CardHeader>

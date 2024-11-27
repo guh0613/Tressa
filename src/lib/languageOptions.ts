@@ -1,4 +1,5 @@
 export const languageOptions = [
+    { value: 'plaintext', label: 'Plain Text' },
     { value: 'javascript', label: 'JavaScript' },
     { value: 'typescript', label: 'TypeScript' },
     { value: 'python', label: 'Python' },
@@ -17,6 +18,5 @@ export const languageOptions = [
     { value: 'json', label: 'JSON' },
     { value: 'markdown', label: 'Markdown' },
     { value: 'yaml', label: 'YAML' },
-    { value: 'plaintext', label: 'Plain Text' },
 ]
 

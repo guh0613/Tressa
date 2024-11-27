@@ -120,7 +120,7 @@ export function ViewTress() {
           <div className="flex justify-between items-center">
             <div>
               <CardTitle className="text-2xl font-bold">{tress.title}</CardTitle>
-              <CardDescription>By User {tress.owner_id}</CardDescription>
+              <CardDescription>By {tress.owner_username}</CardDescription>
             </div>
             <Button variant="outline" onClick={() => navigate('/')}>
               <ChevronLeft className="h-4 w-4 mr-2" />

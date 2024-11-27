@@ -24,6 +24,7 @@ export function CodePreview({ content, language }: CodePreviewProps) {
                             const match = /language-(\w+)/.exec(className || '')
                             return !inline && match ? (
                                 <Prism
+                                    // @ts-ignore
                                     style={tomorrow}
                                     language={match[1]}
                                     PreTag="div"
