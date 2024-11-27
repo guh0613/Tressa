@@ -1,4 +1,5 @@
 export interface Tress {
+  owner_username: string;
   id: number;
   title: string;
   content: string;

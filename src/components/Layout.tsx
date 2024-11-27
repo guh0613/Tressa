@@ -28,7 +28,11 @@ export function Layout({ children }: LayoutProps) {
                 }
             })
                 .then(response => response.json())
-                .then(data => setUsername(data.username))
+                .then(data => {
+                    setUsername(data.username)
+                    localStorage.setItem('userId', data.id)
+                })
+
                 .catch(error => console.error('Error fetching user info:', error))
         }
     }, [])
