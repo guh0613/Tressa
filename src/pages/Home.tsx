@@ -7,21 +7,23 @@ import { Tress } from '@/types'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollText, Lock, Eye } from 'lucide-react'
 import { API_URL } from '@/config'
-import { useAuth } from '@/hooks/useAuth'
+
 export function Home() {
     const [publicTresses, setPublicTresses] = useState<Tress[]>([])
     const [userTresses, setUserTresses] = useState<Tress[]>([])
-    const { isLoggedIn } = useAuth(); 
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const navigate = useNavigate()
 
     useEffect(() => {
+        const token = localStorage.getItem('token')
+        setIsLoggedIn(!!token)
+
         fetch(`${API_URL}/api/tress/`)
             .then(response => response.json())
             .then(data => setPublicTresses(data))
             .catch(error => console.error('Error fetching public tresses:', error))
 
-        if (isLoggedIn) {
-            const token = localStorage.getItem('token');
+        if (token) {
             fetch(`${API_URL}/api/tress/my`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -31,7 +33,7 @@ export function Home() {
                 .then(data => setUserTresses(data))
                 .catch(error => console.error('Error fetching user tresses:', error))
         }
-    }, [isLoggedIn]); // 依赖 isLoggedIn
+    }, [])
 
     const renderTressCard = (tress: Tress) => (
         <Card key={tress.id} className="hover:shadow-md transition-shadow">
